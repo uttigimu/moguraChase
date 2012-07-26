@@ -5,28 +5,28 @@ enchant();
 //初期化
 window.onload = function(){
   game = new Game(320, 320);
-  //ドロイド君の画像を読み込む
+  //もぐらの画像を読み込む
   game.preload('mogura.png');
   game.onload = function(){
   //背景色
-  //var scene = game.rootScene;
-  //scene.backgroundColor = "#cc6600";
+  var scene = game.rootScene;
+  scene.backgroundColor = "#cc6600";
   //スコアラベルを表示
   scoreLabel = new ScoreLabel(5,5);
   game.rootScene.addChild(scoreLabel);
   
   //ランダムに置いてみる
-  //for(i=0;i<7;i++){
-    //var pit = new Pit(rand(300),rand(300));
-    //game.rootScene.addChild(pit);
-  //}
-    //穴を４×４を並べる
-    for(y=0;y<4;y++){
+  for(i=0; i<15; i++){
+    var pit = new Pit(rand(300),rand(300));
+    
+    game.rootScene.addChild(pit);
+  }
+   /* for(y=0;y<4;y++){
        for(x=0;x<4;x++){
           var pit = new Pit(x*48+20,y*48+20);
           game.rootScene.addChild(pit);
           }
-    }
+    }*/
 }
 
 rand = function(n){
