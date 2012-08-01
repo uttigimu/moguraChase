@@ -10,7 +10,7 @@ window.onload = function(){
   game.onload = function(){
   //背景色
   var scene = game.rootScene;
-  scene.backgroundColor = "#cc6600";
+  scene.backgroundColor = "#33CC33";
   //スコアラベルを表示
   scoreLabel = new ScoreLabel(5,5);
   game.rootScene.addChild(scoreLabel);
@@ -18,7 +18,6 @@ window.onload = function(){
   //ランダムに置いてみる
   for(i=0; i<15; i++){
     var pit = new Pit(rand(300),rand(300));
-    
     game.rootScene.addChild(pit);
   }
    /* for(y=0;y<4;y++){
