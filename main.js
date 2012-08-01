@@ -14,11 +14,11 @@ window.onload = function(){
   //スコアラベルを表示
   scoreLabel = new ScoreLabel(5,5);
   game.rootScene.addChild(scoreLabel);
-  
   //ランダムに置いてみる
   for(i=0; i<15; i++){
     var pit = new Pit(rand(300),rand(300));
     game.rootScene.addChild(pit);
+    
   }
    /* for(y=0;y<4;y++){
        for(x=0;x<4;x++){
@@ -32,8 +32,8 @@ rand = function(n){
   return Math.floor(Math.random()*n);
 }
 
-//ドロイド君の出現回数
-maxDroid = 30;
+//モグラの出現回数
+maxDroid = 50;
 
 //穴クラスの定義
 //Spriteクラスを継承する
@@ -48,19 +48,19 @@ Pit = Class.create(Sprite,{
     this.addEventListener('enterframe',this.tick);
     //叩いた場合のイベントリスナーを定義
     this.addEventListener('touchstart',this.hit);
-    //ドロイド君出現モード
+    //モグラ君出現モード
     this.mode = 2;
     this.nextMode = 0;
     this.waitFor = game.frame+rand(100);
   },
   
-  //ドロイド君が出るアニメーションを繰り返す
+  //モグラが出るアニメーションを繰り返す
   tick:function(){
     //２フレームごとに実行する
     if(game.frame%2!= 0)return;
     switch(this.mode){
     
-    //穴からドロイド君が出てくる
+    //穴からモグラが出てくる
     case 0:
         this.frame++;
         if(this.frame>=4){
@@ -73,7 +73,7 @@ Pit = Class.create(Sprite,{
        }
        break;
        
-    //ドロイド君が穴に隠れる
+    //モグラが穴に隠れる
     case 1:
       this.frame--;
       if(this.frame<=0){
@@ -84,9 +84,9 @@ Pit = Class.create(Sprite,{
       //0～99フレームまでランダムに待ち時間を設定
       this.waitFor = game.frame+rand(200);
       
-      //ドロイド君の最大数を減らす
+      //モグラの最大数を減らす
       maxDroid--;
-      //もしこれ以上ドロイド君が出現しないなら穴をふさぐ
+      //もしこれ以上モグラが出現しないなら穴をふさぐ
       if(maxDroid<=0)this.mode=3;
     }
     break;
@@ -106,13 +106,13 @@ Pit = Class.create(Sprite,{
     }
   },
 
-//ドロイド君を殴る
+//モグラを殴る
   hit:function(){
     //すでに殴られた状態なら何もしない
     if(this.frame==5)return;
-    //ドロイド君が半分以上出ていた場合
+    //モグラ君が半分以上出ていた場合
     if(this.frame>=2){
-    //殴られたドロイド君
+    //殴られたモグラ君
     this.frame=5;
     //待ちモードに入る
     this.mode=2;
@@ -140,7 +140,7 @@ ScoreLabel = Class.create(Label,{
     add:function(pts){
       this.score+=pts;
       //表示を修正
-      this.text="SCORE:"+this.score;
+      this.text="SCORE:"+this.score + "/50";
     }
 });
 
