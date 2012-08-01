@@ -7,6 +7,7 @@ window.onload = function(){
   game = new Game(320, 320);
   //もぐらの画像を読み込む
   game.preload('mogura.png');
+  game.preload('goldmogura.png');
   game.onload = function(){
   //背景色
   var scene = game.rootScene;
@@ -15,10 +16,12 @@ window.onload = function(){
   scoreLabel = new ScoreLabel(5,5);
   game.rootScene.addChild(scoreLabel);
   //ランダムに置いてみる
-  for(i=0; i<15; i++){
-    var pit = new Pit(rand(300),rand(300));
+  for(i=0; i<10; i++){
+    var pit = new Pit(rand(300),rand(300)); 
+       //if(this.intersect(pit)){
+       //pit = rand(300,300);
+       //}
     game.rootScene.addChild(pit);
-    
   }
    /* for(y=0;y<4;y++){
        for(x=0;x<4;x++){
@@ -112,7 +115,7 @@ Pit = Class.create(Sprite,{
     if(this.frame==5)return;
     //モグラ君が半分以上出ていた場合
     if(this.frame>=2){
-    //殴られたモグラ君
+    //殴られたモグラ
     this.frame=5;
     //待ちモードに入る
     this.mode=2;
@@ -130,7 +133,7 @@ Pit = Class.create(Sprite,{
 ScoreLabel = Class.create(Label,{
   initialize:function(x,y){
       //Labelクラスのコンストラクターの呼び出し
-      enchant.Label.call(this,"SCORE:0");
+      enchant.Label.call(this,"たおした数:0/50匹");
       this.x=x;
       this.y=y;
       this.score = 0;
@@ -140,7 +143,7 @@ ScoreLabel = Class.create(Label,{
     add:function(pts){
       this.score+=pts;
       //表示を修正
-      this.text="SCORE:"+this.score + "/50";
+      this.text="たおした数:"+this.score + "/50匹";
     }
 });
 
