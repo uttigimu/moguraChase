@@ -4,6 +4,9 @@ enchant();
 
 //初期化
 window.onload = function(){
+//穴の数
+var maxPit = 10;
+var pit = new Array(10);
   game = new Game(320, 320);
   //もぐらの画像を読み込む
   game.preload('mogura.png');
@@ -16,13 +19,19 @@ window.onload = function(){
   scoreLabel = new ScoreLabel(5,5);
   game.rootScene.addChild(scoreLabel);
   //ランダムに置いてみる
-  for(i=0; i<10; i++){
-    var pit = new Pit(rand(300),rand(300)); 
-       //if(this.intersect(pit)){
-       //pit = rand(300,300);
-       //}
-    game.rootScene.addChild(pit);
-  }
+  makePit: for(var i = 0;i < maxPit;i++){
+  	var newPit = new Pit(rand(game.width - 48),rand(game.height - 48));
+  	for(var j = 0; 0 < i && j < i ; j++){
+  		if(pit[j].intersect(newPit)){
+  			//console.log(i+" "+j + " : "+ pit[j].x + ","+pit[j].y+" intersect with "+newPit.x+","+newPit.y);
+  			i--;
+  			continue makePit;
+  		}
+  	}
+  	pit[i] = newPit;
+ 	game.rootScene.addChild(pit[i]);
+ }
+ 
    /* for(y=0;y<4;y++){
        for(x=0;x<4;x++){
           var pit = new Pit(x*48+20,y*48+20);
@@ -30,10 +39,18 @@ window.onload = function(){
           }
     }*/
 }
-
 rand = function(n){
   return Math.floor(Math.random()*n);
 }
+function Check(i,pit){
+	for(var i = 0;i < maxPit;i++){
+		if(pit[i].intersect(pit[i+1])){
+			pit[i] = new Pit(rand(272),rand(272));
+			Check(pit[i], pit[i+1]); 
+		}
+	}
+}
+
 
 //モグラの出現回数
 maxDroid = 50;
@@ -43,15 +60,16 @@ maxDroid = 50;
 Pit = Class.create(Sprite,{
   initialize:function(x,y){
     //Spriteクラスのコンストラクターの呼び出し
-    enchant.Sprite.call(this,48,48);
+   enchant.Sprite.call(this,48,48);
     this.image = game.assets['mogura.png'];
     this.x = x;
-    this.y = y;
+    this.y = y ;
+    this._element.style.zIndex = y + this.height;
     //イベントリスナーを定義
     this.addEventListener('enterframe',this.tick);
-    //叩いた場合のイベントリスナーを定義
+   //叩いた場合のイベントリスナーを定義
     this.addEventListener('touchstart',this.hit);
-    //モグラ君出現モード
+    //モグラ出現モード
     this.mode = 2;
     this.nextMode = 0;
     this.waitFor = game.frame+rand(100);
@@ -60,7 +78,7 @@ Pit = Class.create(Sprite,{
   //モグラが出るアニメーションを繰り返す
   tick:function(){
     //２フレームごとに実行する
-    if(game.frame%2!= 0)return;
+   if(game.frame%2!= 0)return;
     switch(this.mode){
     
     //穴からモグラが出てくる
