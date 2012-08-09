@@ -11,14 +11,14 @@ var pit = new Array(10);
   //画像を読み込む
   game.preload('mogura.png');
   game.preload('goldmogura.png');
+  game.preload('haikei.jpg');
   game.onload = function(){
   //背景
-  var scene = game.rootScene;
-  scene.backgroundColor = "#33CC33";
-  //var scene = game.rootScene;
-   /*scene = new Sprite(320, 320);
-   scene.image= game.assets['haikei.jpg'];
-   game.rootScene.addChild(scene);*/
+  /*var scene = game.rootScene;
+  scene.backgroundColor = "#33CC33";*/
+  var bg = new Sprite(320,320);
+	bg.image = game.assets['haikei.jpg'];
+	game.rootScene.addChild(bg);
   //スコアラベルを表示
   scoreLabel = new ScoreLabel(5,5);
   game.rootScene.addChild(scoreLabel);
